@@ -1,0 +1,93 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1;
+}
+h1, h2, h3, h4 {
+  font-weight: bolder;
+}
+
+li {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  background-color: lightcyan;
+  color: darkblue;
+  margin: 10px 10px 10px 10px;
+}
+
+.jumbotron {
+  text-align: center;
+  background-color: lightcyan;
+  color: darkblue;
+  border-radius: 0;
+  border-bottom: 10px solid darkblue;
+  font-weight: bolder;
+}
+
+.results-container {
+  margin: 20px 20px 20px 20px;
+}
+
+.current-day {
+  border: solid 1px darkblue;
+  padding: 5px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  margin: 20px 20px 20px 20px;
+}
+
+.five-grid {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  margin: 5px 5px 5px 5px;
+}
+
+.submit-btn {
+  display: flex;
+  border-radius: 5px;
+  padding: 8px;
+  color: darkblue;
+  border: solid 1px darkblue;
+  background-color: lightcyan;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.bottom-border {
+  border-bottom: solid 3px darkblue;
+}
+
+@media screen and (max-width: 1200px) {
+  body {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  body {
+    width: 50%;
+  }
+}
+
+/* Cards are stacked on top of each other at 768px or smaller */
+@media screen and (max-width: 768px) {
+  body {
+    width: 25%;
+  }
+}
