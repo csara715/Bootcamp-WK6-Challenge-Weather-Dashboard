@@ -51,7 +51,7 @@ function getWeather(latitude, longitude) {
     latitude +
     "&lon=" +
     longitude +
-    "&units=imperial&appid=" +
+    "&units=imperial&exclude=minutely,hourly&appid=" +
     key;
   fetch(coordinateUrl)
     .then(function (response) {
@@ -97,10 +97,12 @@ function renderFiveDay(data) {
   removeFiveDay();
   const cardEl2 = document.querySelector("#title");
   cardEl2.textContent = "5-Day Forecast:";
-  for (let i = 1; i < 6; i++) {
+  for (let i = 7; i < 40; i+=8) {
     const day = "#day" + i;
     const cardEl = document.querySelector(day);
     cardEl.setAttribute("class", "card");
+    console.log(data);
+    console.log(data.list[i].dt_txt);
     const date = moment(data.list[i].dt_txt).format("MM/DD/YYYY");
     const temp = data.list[i].main.temp;
     const humidity = data.list[i].main.humidity;
@@ -141,6 +143,8 @@ function renderSearches() {
       var searchItem = document.createElement("button");
       searchItem.textContent = storedSearches[j];
       searchItem.setAttribute("class", "submit-btn");
+      searchItem.setAttribute("id", "search");
+      searchItem.setAttribute("value", storedSearches[j]);
       item.appendChild(searchItem);
       searchList.appendChild(item);
     }
@@ -157,7 +161,7 @@ function removeSearches() {
 }
 
 function removeFiveDay() {
-  for (let i = 1; i < 6; i++) {
+  for (let i = 7; i < 40; i+=8) {
     const day = "#day" + i;
     const cardEl3 = document.querySelector(day);
     while (cardEl3.hasChildNodes()) {
