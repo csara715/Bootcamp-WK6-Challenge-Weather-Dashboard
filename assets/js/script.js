@@ -1,10 +1,11 @@
 var searchBtn = document.querySelector("#search");
 var input = document.querySelector("#search-input");
+var key = "2d6d8dbfe40e1b806c1a4ca83545a8af";
 
 var storedSearches = [];
 
-var locationUrl = "http://api.openweathermap.org/geo/1.0/direct";
-var weatherUrl = "http://api.openweathermap.org/data/2.5/forecast";
+var locationUrl = "https://api.openweathermap.org/geo/1.0/direct";
+var weatherUrl = "https://api.openweathermap.org/data/2.5/forecast";
 
 function init() {
   storedSearches = [];
