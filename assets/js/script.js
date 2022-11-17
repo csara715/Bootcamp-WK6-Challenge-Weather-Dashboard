@@ -1,6 +1,5 @@
 var searchBtn = document.querySelector("#search");
 var input = document.querySelector("#search-input");
-var key = "2d6d8dbfe40e1b806c1a4ca83545a8af";
 
 var storedSearches = [];
 
@@ -144,11 +143,9 @@ function renderSearches() {
       searchItem.setAttribute("class", "submit-btn");
       searchItem.setAttribute("id", "search");
       searchItem.setAttribute("value", storedSearches[j]);
-
-      searchItem.addEventListener("click", resultBtn);
-
       item.appendChild(searchItem);
       searchList.appendChild(item);
+      searchItem.addEventListener("click", resultBtn);
     }
   } else {
     return;
@@ -162,8 +159,6 @@ var resultBtn = function (e) {
   if (!city) {
     return;
   }
-
-  renderSearches();
 
   var cityUrl = locationUrl + "?q=" + city + "&limit=5&appid=" + key;
 
