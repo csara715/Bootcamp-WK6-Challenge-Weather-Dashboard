@@ -81,13 +81,12 @@ li {
 
 @media screen and (max-width: 992px) {
   body {
-    width: 50%;
+    width: 75%;
   }
 }
 
-/* Cards are stacked on top of each other at 768px or smaller */
 @media screen and (max-width: 768px) {
   body {
-    width: 25%;
+    width: 50%;
   }
 }

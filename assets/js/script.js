@@ -14,7 +14,7 @@ function init() {
 var getLocation = function (event) {
   event.preventDefault();
 
-  var city = document.querySelector("#search-input").value;
+  const city = document.querySelector("#search-input").value;
 
   if (!city) {
     console.error("You need a search input value!");
@@ -44,7 +44,6 @@ var getLocation = function (event) {
 };
 
 function getWeather(latitude, longitude) {
-
   var coordinateUrl =
     weatherUrl +
     "?lat=" +
@@ -97,12 +96,10 @@ function renderFiveDay(data) {
   removeFiveDay();
   const cardEl2 = document.querySelector("#title");
   cardEl2.textContent = "5-Day Forecast:";
-  for (let i = 7; i < 40; i+=8) {
+  for (let i = 7; i < 40; i += 8) {
     const day = "#day" + i;
     const cardEl = document.querySelector(day);
     cardEl.setAttribute("class", "card");
-    console.log(data);
-    console.log(data.list[i].dt_txt);
     const date = moment(data.list[i].dt_txt).format("MM/DD/YYYY");
     const temp = data.list[i].main.temp;
     const humidity = data.list[i].main.humidity;
@@ -110,7 +107,8 @@ function renderFiveDay(data) {
     const iconCode = data.list[i].weather[0].icon;
     const iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
     const dateEl = document.createElement("h5");
-    const iconEl = document.createElement("img");
+    const iconEl = document.createElement("p");
+    const iconEl1 = document.createElement("img");
     const tempEl = document.createElement("p");
     const humidityEl = document.createElement("p");
     const windEl = document.createElement("p");
@@ -119,7 +117,8 @@ function renderFiveDay(data) {
     humidityEl.textContent = "Humidity: " + humidity + "%";
     dateEl.textContent = date;
     dateEl.setAttribute("font-weight", "bolder");
-    iconEl.setAttribute("src", iconUrl);
+    iconEl1.setAttribute("src", iconUrl);
+    iconEl.appendChild(iconEl1);
     cardEl.appendChild(dateEl);
     cardEl.appendChild(iconEl);
     cardEl.appendChild(tempEl);
@@ -136,15 +135,18 @@ function saveSearch(city) {
 function renderSearches() {
   removeSearches();
   if (storedSearches) {
-    var storedSearchs = JSON.parse(localStorage.getItem("storedSearchs"));
-    var searchList = document.querySelector("#recent-searches");
+    const storedSearchs = JSON.parse(localStorage.getItem("storedSearchs"));
+    const searchList = document.querySelector("#recent-searches");
     for (j = 0; j < storedSearches.length; j++) {
-      var item = document.createElement("span");
-      var searchItem = document.createElement("button");
+      const item = document.createElement("span");
+      const searchItem = document.createElement("button");
       searchItem.textContent = storedSearches[j];
       searchItem.setAttribute("class", "submit-btn");
       searchItem.setAttribute("id", "search");
       searchItem.setAttribute("value", storedSearches[j]);
+
+      searchItem.addEventListener("click", resultBtn);
+
       item.appendChild(searchItem);
       searchList.appendChild(item);
     }
@@ -152,6 +154,35 @@ function renderSearches() {
     return;
   }
 }
+
+var resultBtn = function (e) {
+  const city = e.target.value;
+  console.log(city);
+
+  if (!city) {
+    return;
+  }
+
+  renderSearches();
+
+  var cityUrl = locationUrl + "?q=" + city + "&limit=5&appid=" + key;
+
+  fetch(cityUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      if (!data[0].lat) {
+        console.error("Can't find city!");
+        return;
+      }
+
+      var latitude = data[0].lat;
+      var longitude = data[0].lon;
+      getWeather(latitude, longitude);
+      clearInput();
+    });
+};
 
 function removeSearches() {
   const searchList1 = document.querySelector("#recent-searches");
@@ -161,7 +192,7 @@ function removeSearches() {
 }
 
 function removeFiveDay() {
-  for (let i = 7; i < 40; i+=8) {
+  for (let i = 7; i < 40; i += 8) {
     const day = "#day" + i;
     const cardEl3 = document.querySelector(day);
     while (cardEl3.hasChildNodes()) {
@@ -182,5 +213,4 @@ function clearInput() {
 }
 
 init();
-
 searchBtn.addEventListener("submit", getLocation);
